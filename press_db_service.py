@@ -19,9 +19,11 @@ class PressDbService(CRUD):
         # 뉴스 텍스트 개별 번역 및 저장
         for line_number, content in enumerate(content_list):
             # 나중에 벌크 연산 이용해보면 좋을듯
+            if len(content) == 0:
+                continue
             line_number += 1
-            translated_content = translate_press_content_line(content)
             print("press_id: ", last_press_id, "line_number: ", line_number, "content: ", content)
+            translated_content = translate_press_content_line(content)
             self.insertPressContentDB(last_press_id, line_number, content, translated_content)
 
         print(original_url, "업로드 완료")
