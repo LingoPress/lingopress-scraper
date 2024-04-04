@@ -1,1 +1,2 @@
-0 6 * * * python3 -u ./main.py >> /var/log/cron.log
+CRON_TZ=Asia/Seoul
+0 6 * * * python -u /app/main.py >> /var/log/cron.log
