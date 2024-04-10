@@ -10,6 +10,8 @@ RUN pip install -r ./requirements.txt
 # copy script to docker path
 COPY *.py ./
 
+ENV TZ=Asia/Seoul
+
 # 파일 복사
 COPY crontab /etc/cron.d/crontab
 # 개행 타입 변환
