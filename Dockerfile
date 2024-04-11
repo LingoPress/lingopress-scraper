@@ -23,4 +23,4 @@ RUN chmod 0644 /etc/cron.d/crontab
 RUN crontab /etc/cron.d/crontab
 
 # excute command
-CMD ["cron" , "-f"]
+CMD ["/bin/bash", "-c", "printenv > /etc/environment && cron -f"]
