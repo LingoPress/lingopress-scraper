@@ -4,13 +4,15 @@ from deepl_translater import translate_press_content_line
 
 class PressDbService(CRUD):
 
-    def uploadPressDB(self, title, content, original_url, published_at, image_url, total_content_line):
+    def uploadPressDB(self, title, content, original_url, published_at, image_url, authors, language, publisher,
+                      access_level, total_content_line):
         if self.check_exist_url(original_url):
             print(original_url, "이미 존재하는 기사입니다.")
             return
 
+        translated_title = translate_press_content_line(title)
         # 뉴스 저장
-        last_press_id = self.insertPressDB(title, content, original_url, published_at, image_url, total_content_line)
+        last_press_id = self.insertPressDB(title, content, original_url, published_at, image_url, total_content_line, authors, language, publisher, translated_title, access_level)
         print("press_id: ", last_press_id)
 
         # 뉴스 텍스트 리스트로 분리
