@@ -17,12 +17,11 @@ class PressDbService(CRUD):
 
         # 뉴스 텍스트 리스트로 분리
         content_list = content.split('\n')
+        filtered_content_list = [c for c in content_list if len(c) > 0 and c != '﻿']
 
         # 뉴스 텍스트 개별 번역 및 저장
-        for line_number, content in enumerate(content_list):
+        for line_number, content in enumerate(filtered_content_list):
             # 나중에 벌크 연산 이용해보면 좋을듯
-            if len(content) == 0:
-                continue
             line_number += 1
             print("press_id: ", last_press_id, "line_number: ", line_number, "content: ", content)
             translated_content = translate_press_content_line(content)
