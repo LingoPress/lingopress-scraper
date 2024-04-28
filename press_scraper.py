@@ -15,6 +15,7 @@ class PressScraper:
     def get_text(self):
         # return self.article.text.split('\n')
         return self.article.text
+
     def get_url(self):
         return self.article.url
 
@@ -57,9 +58,15 @@ class PressScraper:
                 if datetime_obj:
                     return datetime_obj
 
-
         return None
         # return self.article.publish_date
 
     def get_top_image(self):
         return self.article.top_image
+
+    def get_authors(self):
+        return self.article.authors
+
+    def get_publisher(self):
+        if self.article.source_url.__contains__("globalvoices.org"):
+            return "Global Voices"
