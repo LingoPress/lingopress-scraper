@@ -75,3 +75,21 @@ class CRUD(Databases):
             self.db.commit()
         except Exception as e:
             print(" insert DB err: ", e)
+
+    # 문장 끝에 특정 문자가 있는 데이터만 선택
+    def selectPressContentLine(self):
+        sql = "SELECT id, line_text, translated_line_text FROM press_content_line WHERE line_text LIKE '%!@!'"
+        try:
+            self.cursor.execute(sql)
+            result = self.cursor.fetchall()
+            return result
+        except Exception as e:
+            print("Read DB Error: ", e)
+
+    def updatePressContentLine(self, line_id, line_text, translated_line_text):
+        sql = "UPDATE press_content_line SET line_text = %s, translated_line_text = %s WHERE id = %s"
+        try:
+            self.cursor.execute(sql, (line_text, translated_line_text, line_id))
+            self.db.commit()
+        except Exception as e:
+            print("Update DB Error: ", e)
