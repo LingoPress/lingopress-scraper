@@ -40,6 +40,5 @@ for news in news_list:
     news['content'] = news['content'].replace('\n\n', '\n')
     press_db_service.uploadPressDB(news['title'], news['content'], news['url'], news['published_at'],
                                    news['image_url'], news['authors'], news['language'], news['publisher'], news['access_level'])
-    news['content'].split('\n')
 
 print(datetime.today(), '에 저장 완료')
