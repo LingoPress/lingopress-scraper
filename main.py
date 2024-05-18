@@ -27,7 +27,8 @@ for need_url in news_urls:
         'authors': ', '.join(crawler.get_authors()),
         'language': 'en',
         "publisher": crawler.get_publisher(),
-        'access_level': 'public'
+        'access_level': 'public',
+        'category': 'NEWS'
     })
 
 # 3. 데이터베이스 연결하기
@@ -39,6 +40,6 @@ for news in news_list:
     # 뉴스 컨텐츠가 두줄씩 띄어쓰기 되어있는 경우 한줄로 합치기
     news['content'] = news['content'].replace('\n\n', '\n')
     press_db_service.uploadPressDB(news['title'], news['content'], news['url'], news['published_at'],
-                                   news['image_url'], news['authors'], news['language'], news['publisher'], news['access_level'])
+                                   news['image_url'], news['authors'], news['language'], news['publisher'], news['access_level'], news['category'])
 
 print(datetime.today(), '에 저장 완료')

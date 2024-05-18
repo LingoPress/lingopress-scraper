@@ -9,7 +9,7 @@ class PressDbService(CRUD):
     nlp = spacy.load("en_core_web_sm")
 
     def uploadPressDB(self, title, content, original_url, published_at, image_url, authors, language, publisher,
-                      access_level):
+                      access_level, category):
         if self.check_exist_url(original_url):
             print(original_url, "이미 존재하는 기사입니다.")
             return
@@ -23,7 +23,7 @@ class PressDbService(CRUD):
 
         # 뉴스 저장
         last_press_id = self.insertPressDB(title, content, original_url, published_at, image_url, total_content_line,
-                                           authors, language, publisher, translated_title, access_level)
+                                           authors, language, publisher, translated_title, access_level, category)
         print("press_id: ", last_press_id)
 
         # 뉴스 텍스트 개별 번역 및 저장
