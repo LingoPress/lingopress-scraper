@@ -22,7 +22,9 @@ class PressDbService(CRUD):
         total_content_line = len(sentences)
 
         # 뉴스 저장
-        last_press_id = self.insertPressDB(title, content, original_url, published_at, image_url, total_content_line,
+        brief_news_content = sentences[:3]
+        combined_content = ' '.join(brief_news_content)
+        last_press_id = self.insertPressDB(title, combined_content, original_url, published_at, image_url, total_content_line,
                                            authors, language, publisher, translated_title, access_level, category)
         print("press_id: ", last_press_id)
 
