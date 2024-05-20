@@ -2,17 +2,10 @@ from database import Databases
 
 
 class CRUD(Databases):
-    def insertDB(self, table, column, data):
-        sql = " INSERT INTO {table}({column}) VALUES ({data}) ;".format(table=table,
-                                                                        column=column, data=data)
-        print("sql")
-        print(sql)
-        try:
-            # self.cursor.execute(sql)
-            self.cursor.execute(sql, (data,))
-            self.db.commit()
-        except Exception as e:
-            print(" insert DB err ", e)
+    def insertDB(self, table, columns, values):
+        query = f"INSERT INTO {table} ({columns}) VALUES (%s, %s, %s)"
+        self.cursor.execute(query, values)
+        self.commit()
 
     def readDB(self, table, column):
         sql = " SELECT {column} from {table}".format(column=column, table=table)
