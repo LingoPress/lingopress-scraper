@@ -86,3 +86,29 @@ class CRUD(Databases):
             self.db.commit()
         except Exception as e:
             print("Update DB Error: ", e)
+
+    def update_press_content(self):
+        # 모든 press 레코드 가져오기
+        self.cursor.execute("SELECT id, content FROM press")
+        press_records = self.cursor.fetchall()
+
+        for record in press_records:
+            press_id, content = record
+            # 기존 content를 3줄로 자르기
+            trimmed_content = trim_content_to_three_lines(content)
+
+            # content 업데이트
+            self.cursor.execute(
+                "UPDATE press SET content = %s WHERE id = %s",
+                (trimmed_content, press_id)
+            )
+
+        # 변경사항 커밋
+        self.db.commit()
+        print("Press content updated successfully")
+
+
+def trim_content_to_three_lines(content):
+    lines = content.split('\n')
+    return '\n'.join(lines[:3])
+
