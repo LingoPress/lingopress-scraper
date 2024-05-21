@@ -13,8 +13,7 @@ class PressDbService(CRUD):
             print(original_url, "이미 존재하는 기사입니다.")
             return
 
-        translated_title_ko = translate_press_content_line(title)
-        translated_title_ja = translate_press_content_line(title, "ja")
+
 
         nlp = spacy.load("en_core_web_sm")
         doc = nlp(content)
@@ -25,13 +24,22 @@ class PressDbService(CRUD):
         brief_news_content = sentences[:3]
         combined_content = ' '.join(brief_news_content)
 
-        last_press_id = self.insertPressDB(title, combined_content, original_url, published_at, image_url, total_content_line,
+        last_press_id = self.insertPressDB(title, combined_content, original_url, published_at, image_url,
+                                           total_content_line,
                                            authors, language, publisher, access_level, category)
-        # 한국어 제목
-
-        # 일본어 제목
 
         print("press_id: ", last_press_id)
+
+        translated_title_ko = translate_press_content_line(title)
+        translated_title_ja = translate_press_content_line(title, "ja")
+
+        # 한국어 제목
+        self.insertDB("press_translation", "press_id, translated_title, translated_language",
+                      (last_press_id, translated_title_ko, "ko"))
+
+        # 일본어 제목
+        self.insertDB("press_translation", "press_id, translated_title, translated_language",
+                      (last_press_id, translated_title_ja, "ja"))
 
         # 뉴스 텍스트 개별 번역 및 저장
         for line_number, content in enumerate(sentences):
