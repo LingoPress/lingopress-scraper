@@ -38,15 +38,15 @@ class CRUD(Databases):
             print("delete DB err", e)
 
     def insertPressDB(self, title, content, original_url, published_at, image_url, total_content_line, authors,
-                      language, publisher, translated_title, access_level, category):
+                      language, publisher, access_level, category):
         sql = ("INSERT INTO press(title, content, original_url, published_at, image_url, total_content_line, author,"
-               " language, publisher, translated_title, access_level, category) VALUES "
-               "(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id;")
+               " language, publisher, access_level, category) VALUES "
+               "(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id;")
 
         try:
             self.cursor.execute(sql, (
                 title, content, original_url, published_at, image_url, total_content_line, authors, language, publisher,
-                translated_title, access_level, category))
+                 access_level, category))
             self.db.commit()
             return self.cursor.fetchone()[0]
         except Exception as e:
@@ -61,10 +61,10 @@ class CRUD(Databases):
         except Exception as e:
             print(" read DB err: ", e)
 
-    def insertPressContentDB(self, press_id, line_number, content, translated_content):
-        sql = "INSERT INTO press_content_line(press_id, line_number, line_text, translated_line_text) VALUES (%s, %s, %s, %s);"
+    def insertPressContentDB(self, press_id, line_number, content):
+        sql = "INSERT INTO press_content_line(press_id, line_number, line_text) VALUES (%s, %s, %s, %s);"
         try:
-            self.cursor.execute(sql, (press_id, line_number, content, translated_content))
+            self.cursor.execute(sql, (press_id, line_number, content))
             self.db.commit()
         except Exception as e:
             print(" insert DB err: ", e)
