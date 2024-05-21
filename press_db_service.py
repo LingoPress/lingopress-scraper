@@ -6,7 +6,6 @@ from deepl_translater import translate_press_content_line
 
 
 class PressDbService(CRUD):
-    nlp = spacy.load("en_core_web_sm")
 
     def uploadPressDB(self, title, content, original_url, published_at, image_url, authors, language, publisher,
                       access_level, category):
