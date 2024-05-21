@@ -62,7 +62,7 @@ class CRUD(Databases):
             print(" read DB err: ", e)
 
     def insertPressContentDB(self, press_id, line_number, content):
-        sql = "INSERT INTO press_content_line(press_id, line_number, line_text) VALUES (%s, %s, %s, %s);"
+        sql = "INSERT INTO press_content_line(press_id, line_number, line_text) VALUES (%s, %s, %s);"
         try:
             self.cursor.execute(sql, (press_id, line_number, content))
             self.db.commit()
