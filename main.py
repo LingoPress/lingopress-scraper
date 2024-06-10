@@ -2,8 +2,8 @@ from rss_based_news_scraper import rss_based_news_scraper
 
 
 rss_link_list = [
-    {"lang": "en", "rss": "https://globalvoices.org/feed"},
-    {"lang": "jp", "rss": "https://jp.globalvoices.org/feed"}
+    {"lang": "en", "rss": "https://globalvoices.org/feed", "nlp_model": "en_core_web_sm"},
+    {"lang": "ja", "rss": "https://jp.globalvoices.org/feed", "nlp_model": "ja_core_news_md"}
 ]
 
 #
