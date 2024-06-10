@@ -1,11 +1,20 @@
 from dateutil.parser import parse
 from newspaper import Article
+from newspaper import Config
 
 
 class PressScraper:
-    def __init__(self, url):
+
+
+    def __init__(self, url, language):
         self.url = url
-        self.article = Article(url, language='en')
+
+        # config
+        user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0) Gecko/20100101 Firefox/78.0'
+        config = Config()
+        config.browser_user_agent = user_agent
+        config.request_timeout = 10
+        self.article = Article(url, language=language, config=config)
         self.article.download()
         self.article.parse()
 

@@ -6,6 +6,9 @@ from deepl_translater import translate_press_content_line
 
 
 class PressDbService(CRUD):
+    def __init__(self, nlp_model):
+        super().__init__()
+        self.nlp_model = nlp_model
 
     def uploadPressDB(self, title, content, original_url, published_at, image_url, authors, language, publisher,
                       access_level, category):
@@ -15,7 +18,7 @@ class PressDbService(CRUD):
 
 
 
-        nlp = spacy.load("en_core_web_sm")
+        nlp = spacy.load(self.nlp_model)
         doc = nlp(content)
         sentences = [sent.text for sent in doc.sents]
         total_content_line = len(sentences)

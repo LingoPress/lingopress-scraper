@@ -9,7 +9,7 @@ rss_link_list = [
 #
 for rss in rss_link_list:
     print("@@@: ", rss['lang'], "뉴스 저장 시작 --")
-    rss_based_news_scraper(rss['lang'], rss['rss'])
+    rss_based_news_scraper(rss['lang'], rss['rss'], rss['nlp_model'])
     print("@@@: ", rss['lang'], "뉴스 저장 완료 --")
 
 print("일본어 뉴스 저장")
