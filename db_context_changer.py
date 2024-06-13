@@ -7,11 +7,12 @@ import crud
 crud = crud.CRUD()
 
 # line_text 컬럼에서 "!@!"를 "\n"으로 변경
-data = crud.selectPressContentLine()
-for line in data:
-    line_id = line[0]
-    line_text = line[1]
-    line_text = line_text.replace("!@!", "\n")
-    translated_line_text = line[2] + "\n"
-    crud.updatePressContentLine(line_id, line_text, translated_line_text)
-    print(line_id, "번 데이터 수정 완료")
+def update_press_content():
+    data = crud.selectPressContentLine()
+    for line in data:
+        line_id = line[0]
+        line_text = line[1]
+        line_text = line_text.replace("!@!", "\n")
+        crud.updatePressContentLine(line_id, line_text)
+        print(line_id, "번 데이터 수정 완료")
+
