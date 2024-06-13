@@ -5,16 +5,17 @@ from database import Databases
 from press_db_service import *
 
 
-def rss_based_news_scraper(language, rss):
+def rss_based_news_scraper(language, rss, nlp_model):
     # 1. rss 에 있는 기사 리스트 크롤링
     rss_scraper = RssScraper(rss)
     # 크롤링할 뉴스 수, 기본값은 5개
-    news_urls = rss_scraper.get_press_urls(4)
+    news_urls = rss_scraper.get_press_urls(3)
     #
     # 2. 기사별로 스크래핑
+
     news_list = []
     for need_url in news_urls:
-        crawler = PressScraper(need_url)
+        crawler = PressScraper(need_url, language)
         # news_list에 기사 정보를 저장
         news_list.append({
             'title': crawler.get_title(),
@@ -30,7 +31,7 @@ def rss_based_news_scraper(language, rss):
         })
     # 3. 데이터베이스 연결하기
     db = Databases()
-    press_db_service = PressDbService()
+    press_db_service = PressDbService(nlp_model)
     # 4. 스크래핑한 데이터를 데이터베이스에 저장하기
     for news in news_list:
         # 뉴스 컨텐츠가 두줄씩 띄어쓰기 되어있는 경우 한줄로 합치기
