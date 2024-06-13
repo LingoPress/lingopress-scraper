@@ -17,8 +17,14 @@ def rss_based_news_scraper(language, rss, nlp_model):
     for need_url in news_urls:
         crawler = PressScraper(need_url, language)
         # news_list에 기사 정보를 저장
+
+        # 기사 제목에 " · Global Voices 日本語"가 포함되어있는 경우 제거
+        title = crawler.get_title()
+        if title.__contains__(" · Global Voices 日本語"):
+            title = title.replace(" · Global Voices 日本語", "")
+
         news_list.append({
-            'title': crawler.get_title(),
+            'title': title,
             'content': crawler.get_text(),
             'url': crawler.get_url(),
             'published_at': crawler.get_publish_date(),
