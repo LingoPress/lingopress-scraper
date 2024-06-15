@@ -35,8 +35,8 @@ def rss_based_news_scraper(language, rss, nlp_model):
             'access_level': 'public',
             'category': 'NEWS'
         })
-    # 3. 데이터베이스 연결하기
-    db = Databases()
+    ## 3. 데이터베이스 연결하기
+    #db = Databases()
     press_db_service = PressDbService(nlp_model)
     # 4. 스크래핑한 데이터를 데이터베이스에 저장하기
     for news in news_list:
