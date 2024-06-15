@@ -14,11 +14,6 @@ class PressScraper:
         config = Config()
         config.browser_user_agent = user_agent
         config.request_timeout = 10
-
-        language = language.lower()
-        # en lang setting
-        if language == 'en-us':
-            language = 'en'
         self.article = Article(url, language=language, config=config)
         self.article.download()
         self.article.parse()

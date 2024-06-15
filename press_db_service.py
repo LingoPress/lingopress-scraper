@@ -33,8 +33,7 @@ class PressDbService(CRUD):
         # TODO: 원문 언어를 제외한 언어로 제목 번역
         print("@@@@@ lang", language)
 
-        # en is deprecated. use en-us
-        support_language_list = ["ko", "ja", "en-us"]
+        support_language_list = ["ko", "ja", "en"]
         support_language_list.remove(language)
         for target_lang in support_language_list:
             translated_title = translate_press_content_line(title, target_lang)
