@@ -7,7 +7,8 @@ from deepl_translater import translate_press_content_line
 class PressDbService(CRUD):
     def __init__(self, nlp_model):
         super().__init__()
-        self.nlp_model = nlp_model
+        if nlp_model is not None:
+            self.nlp_model = nlp_model
 
     def uploadPressDB(self, title, content, original_url, published_at, image_url, authors, language, publisher,
                       access_level, category):
@@ -15,14 +16,19 @@ class PressDbService(CRUD):
             print(original_url, "이미 존재하는 기사입니다.")
             return
 
-        nlp = spacy.load(self.nlp_model)
-        doc = nlp(content)
-        sentences = [sent.text for sent in doc.sents]
-        total_content_line = len(sentences)
-
-        # 뉴스 저장
-        brief_news_content = sentences[:3]
-        combined_content = ' '.join(brief_news_content)
+        combined_content = ""
+        total_content_line = 0
+        if category == "NEWS":
+            nlp = spacy.load(self.nlp_model)
+            doc = nlp(content)
+            content = [sent.text for sent in doc.sents]
+            total_content_line = len(content)
+            # 뉴스 저장
+            brief_news_content = content[:3]
+            combined_content = ' '.join(brief_news_content)
+        if category == "NOVEL":
+            total_content_line = len(content)
+            combined_content = ""
 
         last_press_id = self.insertPressDB(title, combined_content, original_url, published_at, image_url,
                                            total_content_line,
@@ -51,11 +57,11 @@ class PressDbService(CRUD):
         #              (last_press_id, translated_title_ja, "ja"))
 
         # 뉴스 텍스트 개별 번역 및 저장
-        for line_number, content in enumerate(sentences):
+        for line_number, content_line in enumerate(content):
             # 나중에 벌크 연산 이용해보면 좋을듯
             line_number += 1
-            print("press_id: ", last_press_id, "line_number: ", line_number, "content: ", content)
+            print("press_id: ", last_press_id, "line_number: ", line_number, "content: ", content_line)
 
-            self.insertPressContentDB(last_press_id, line_number, content)
+            self.insertPressContentDB(last_press_id, line_number, content_line)
 
         print(original_url, "업로드 완료")
