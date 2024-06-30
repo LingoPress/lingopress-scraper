@@ -1,14 +1,14 @@
 # csv 파일 db에 올리기
 import os
 import sys
-import novel_csv_reader
+import novel_txt_reader
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from press_db_service import PressDbService
 
 
 def novel_upload(file_path, title, authors, language):
-    content = novel_csv_reader.read_csv_file(file_path)
+    content = novel_txt_reader.read_txt_file(file_path)
     press = {
         'title': title,
         'content': content,
